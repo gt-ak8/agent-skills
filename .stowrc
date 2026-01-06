@@ -1,0 +1,5 @@
+--target=~/.copilot/skills/
+--ignore=.stowrc
+--ignore=DS_Store
+--ignore=README.md
+--ignore=setup.sh
