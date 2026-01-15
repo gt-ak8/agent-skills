@@ -63,6 +63,7 @@ Create a description that:
 [Include any context provided by the user]
 
 ## What
+
 [High-level solution summary]
 [Incorporate user-provided details about the solution]
 
