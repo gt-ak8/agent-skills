@@ -109,6 +109,15 @@ Example:
 "$CMUX" rpc browser.storage.clear "{\"surface_id\":\"$NEW\",\"kind\":\"local\"}"
 ```
 
+## Login state and host routing
+
+The embedded browser is a fresh Chromium-like profile with **no extensions** — 1Password/Bitwarden/Keychain autofill don't work inside it. Two user-side settings in the cmux app cover this:
+
+- **Browser import** (Settings → Browser): imports cookies, history and sessions from Chrome, Firefox, Arc, Safari and ~20 other browsers, so panes open already authenticated.
+- **Host whitelist / external URL bypass** (Settings → Browser → Host Whitelist): hosts that match stay inside cmux; everything else opens in the user's default system browser (where their password manager works). Substring and regex patterns supported.
+
+Neither is configurable from the VM via RPC — they live in the Mac app. If a pane hits a login wall and you don't already have credentials, suggest the user either import the relevant browser or add the host to the bypass list. The programmatic alternatives stay `browser.cookies.set` / `browser.storage.set` with auth state brought in from elsewhere (OAuth device flow, a cookie they pasted, etc.).
+
 ## Recording and tracing
 
 ```sh
