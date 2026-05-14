@@ -7,9 +7,6 @@ A small collection of agent skills.
 The preferred way is via [`npx skills`](https://github.com/vercel-labs/skills):
 
 ```sh
-# create-pr — open a PR using gh CLI with smart commit analysis
-npx skills@latest add https://github.com/gt-ak8/agent-skills/tree/main/create-pr
-
 # task-planner — write actionable plans to ~/.agentic/plans/
 npx skills@latest add https://github.com/gt-ak8/agent-skills/tree/main/task-planner
 
