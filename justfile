@@ -1,7 +1,8 @@
-# Manage symlinks of this repo's skills into the Claude user config.
+# Manage symlinks of this repo's skills and agents into the Claude user config.
 
 repo := justfile_directory()
 skills_dir := env_var('HOME') / ".claude/skills"
+agents_dir := env_var('HOME') / ".claude/agents"
 
 # List skills available in this repo.
 [private]
@@ -45,6 +46,25 @@ link:
             echo "link  $s"
         fi
     done <<< "$chosen"
+
+# Symlink this repo's subagents (agents/*.md) into ~/.claude/agents.
+link-agents:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    shopt -s nullglob
+    agents=("{{repo}}"/agents/*.md)
+    [ "${#agents[@]}" -gt 0 ] || { echo "No agents found in {{repo}}/agents" >&2; exit 1; }
+    mkdir -p "{{agents_dir}}"
+    for a in "${agents[@]}"; do
+        name="$(basename "$a")"
+        target="{{agents_dir}}/$name"
+        if [ -e "$target" ] || [ -L "$target" ]; then
+            echo "skip  $name (already exists)"
+        else
+            ln -s "$a" "$target"
+            echo "link  $name"
+        fi
+    done
 
 # Interactively pick repo skills to remove from ~/.claude/skills.
 unlink:
